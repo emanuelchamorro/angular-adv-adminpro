@@ -74,7 +74,7 @@ buscar(termino:string) {
   }
   
   this.busqueda.buscar('usuarios', termino)
-     .subscribe(resp => {
+     .subscribe((resp:Usuario[]) => {
        this.usuarios = resp
      })
 }

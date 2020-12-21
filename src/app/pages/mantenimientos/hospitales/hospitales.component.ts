@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { Hospital } from 'src/app/models/hospital.model';
+import { BusquedasService } from 'src/app/services/busquedas.service';
 import { HospitalService } from 'src/app/services/hospital.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import Swal from 'sweetalert2';
@@ -13,10 +14,13 @@ import Swal from 'sweetalert2';
 export class HospitalesComponent implements OnInit, OnDestroy {
 
    public hospitales:Hospital[] = []
+   public hospitalesTemp:Hospital[]=[];
    public cargando: boolean = true
 
 
-  constructor(private hospitalService:HospitalService, private modalService:ModalImagenService) { }
+  constructor(private hospitalService:HospitalService, 
+              private modalService:ModalImagenService,
+              private busqueda:BusquedasService) { }
  
   ngOnDestroy(): void {
     this.modalService.nuevaImagen.unsubscribe();
@@ -64,7 +68,7 @@ eliminarHospital(hospital:Hospital) {
 
 
 async abrirSweetAlert(){
-  const {value} = await Swal.fire<string>({
+  const {value= ''} = await Swal.fire<string>({
     title: 'Crea un nuevo hospital',
     input: 'text',
     inputLabel: 'Tu nuevo hospital',
@@ -79,6 +83,20 @@ async abrirSweetAlert(){
                         )
  }
 }
+
+buscar(termino:string) {
+  
+  if(termino.length === 0) {
+    return this.cargarHospitales();
+  }
+  
+  this.busqueda.buscar('hospitales', termino)
+     .subscribe((resp:Hospital[]) => {
+       this.hospitales = resp
+     })
+}
+
+
 
 abrirModal(hospital: Hospital) {
   this.modalService.abrirModal('hospitales', hospital._id, hospital.img); 
