@@ -1,0 +1,49 @@
+<div class="row">
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+           <form class="form p-t-20" [formGroup]="perfilForm" (submit)="actualizarPerfil()">
+                <div class="form-group">
+                    <label for="exampleInputuname">User Name</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                        <input type="text" class="form-control" id="exampleInputuname" placeholder="Username"
+                         formControlName="nombre">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="ti-email"></i></div>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                        formControlName="email"
+                        [readOnly]="usuario.google">
+                    </div>
+                </div>
+       
+                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" 
+                        [disabled]="perfilForm.invalid">Guardar</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <h4>Avatar</h4>
+            <img src="">
+            <input type="file" class="d-none" (change)="cambiarImagen($event.target.files[0])" #hiddenbutton>
+            <a class="changeAvatar" (click)="hiddenbutton.click()">
+                <img *ngIf="!imgTemp"[src]="usuario.imgUrl" alt="user">
+                <img *ngIf="imgTemp"[src]="imgTemp" alt="user">
+            </a>
+            <!--Subir imagen con boton de guardar-->
+             <!-- <button type="button" (click)="subirImagen()" [disabled]="!imagenSubir" class="btn btn-success waves-effect waves-light m-r-10">Guardar cambios</button>-->
+
+        </div>
+    </div>
+</div> 
+
+</div>

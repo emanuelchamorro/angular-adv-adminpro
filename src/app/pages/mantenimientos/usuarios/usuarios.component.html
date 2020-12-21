@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="buscar usuarios"
+                #txtTermino (keyup)="buscar(txtTermino.value)"> 
+            </div>    
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="cargando">
+    <div class="col-12">
+    <div class="alert alert-info text-center">
+        <h4 class="alert-heading">Cargando...</h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p class="mb-0">Por favor espere</p>
+    </div>
+    </div>
+</div>
+<div class="row" *ngIf="!cargando">
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Total de usuarios ({{totalUsuarios}})</h4>
+            <h6 class="card-subtitle">Usuarios registrados en la app</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Email</th>
+                            <th>Nombre</th>
+                            <th>Role</th>
+                            <th>Auth</th>
+                            <th class="text-nowrap">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuarios">
+                            <td ><span class="avatar-list">
+                                <img class="cursor-pointer"
+                                     [src]="usuario.imgUrl"
+                                     (click)="abrirModal(usuario)">
+                            </span>
+                            </td>
+                            <td>{{usuario.email}}</td>
+                            <td>{{usuario.nombre}}</td>
+                            <td>          
+                             <!--[()] es para el two ways binding, actualizar la vista
+                                y el modelo al mismo tiempo-->
+                               <select class="form-control"
+                               [(ngModel)]="usuario.role"
+                               (change)="cambiarRole(usuario)" >
+                                <option value="ADMIN_ROLE">Admin</option>
+                                <option value="USER_ROLE">User</option>
+                              </select>
+                           </td>
+                            <td>
+                                <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                                <span *ngIf="!usuario.google" class="label label-info">Normal</span>
+                            </td>
+                        
+                            <td class="text-nowrap text-center">
+                      
+                                <a class="cursor-pointer" (click)="borrarUsuario(usuario)" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+         
+         
+         
+           
+            </div>
+        <div *ngIf="txtTermino.value.length === 0">
+            <button (click)="cambiarPagina(-5)" class="btn btn-secondary ">Anteriores</button>
+            &nbsp;
+            <button (click)="cambiarPagina(5)" class="btn btn-secondary ">Siguientes</button>
+        </div>
+        </div>
+    </div>
+</div>
+</div>

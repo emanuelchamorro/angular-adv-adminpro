@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import {catchError, map, tap} from 'rxjs/operators'
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
+import Swal from 'sweetalert2';
 
 declare const gapi:any
 
@@ -15,6 +17,7 @@ const base_url = environment.base_url
 export class UsuarioService {
 
   public auth2:any;
+  public usuario:Usuario;
 
   constructor(private http:HttpClient, private router:Router, private ngZone: NgZone) { 
   //llamado antes de ngOnInit()
@@ -61,12 +64,22 @@ export class UsuarioService {
      })
      /* Reemplazar el token del local storage por el que duevelve renew token */
      .pipe(
-       tap((resp:any) => {
-        localStorage.setItem('token', resp.token)
+      map((resp:any) => {
+       
+       
+        const { email, google, nombre, password, role, _id, img=''} = resp.usuario;
+        
+        // Crear nueava instancia del usuario
+
+        this.usuario = new Usuario(google, nombre, email, img, '', role, _id);
+           
+        localStorage.setItem('token', resp.token);
+       
+        return  true;
        }),
         /*transformar la respuesta en un booleano para poder usarlo en
      el authGuard*/
-     map( resp => true),
+     
      /*Cuando no hay respuesta hay que retornar un false que le sirva al authGuard para
      navegar al login, para retornar un observable booleano*/
      catchError(error => of(false))
@@ -91,6 +104,18 @@ export class UsuarioService {
 
   }
 
+actualizarUsuario(data: {nombre:string, email:string, role:string}) {
+
+  const token = localStorage.getItem('token');
+
+  return this.http.put(`${base_url}/usuarios/${this.usuario._id}`, data, {
+       headers: {
+         'x-token': token
+       }
+     });
+}
+
+
   login(formData: any) {
     return this.http.post(`${base_url}/login`, formData )
                     .pipe(
@@ -108,4 +133,73 @@ export class UsuarioService {
                       })
                     );
   }
+
+
+ cargarUsuarios(desde:number=0) {
+  
+  const token = localStorage.getItem('token');
+  const url= `${base_url}/usuarios?desde=${desde}`;
+
+  return this.http.get<any>(url, {
+    headers: {
+      'x-token': token
+    }
+
+  })
+  //Para obtener avatar de cada usuario del arreglo de usuarios
+  .pipe(
+    map(resp=>{
+      const usuarios= resp.usuarios.map(
+        user => new Usuario(user.google, user.nombre, user.email, user.img, '', user.role, user._id)
+      );
+
+      return {
+        total: resp.total,
+        usuarios
+      };
+    })
+  )
+  
+  ;
+ }
+
+//getters para no repetir codigo en cada metodo
+ 
+get token(): string {
+  return localStorage.getItem('token') || '';
+}
+
+get headers() {
+return {
+  headers: {
+    'x-token': this.token
+  }
+}
+
+}
+
+
+eliminarUsuario(usuario:Usuario) {
+ 
+  
+ const url= `${base_url}/usuarios/${usuario._id}`;
+  
+  return this.http.delete(url,this.headers);
+
+
+
+ 
+}
+
+cambiarUsuario( usuario: Usuario ) {
+
+  const token = localStorage.getItem('token');
+
+  return this.http.put(`${base_url}/usuarios/${usuario._id}`, usuario, {
+       headers: {
+         'x-token': token
+       }
+     });
+}
+
 }

@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 declare const gapi:any;
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   public formSubmitted = false
   public auth2:any
+ 
 
   public loginForm = this.fb.group({
             //para que ponga el mail recordado y si es nulo un string vacio

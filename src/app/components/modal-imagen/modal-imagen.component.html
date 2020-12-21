@@ -1,0 +1,36 @@
+<div class="fondo-modal-img fadeIn animated fast"
+     [class.oculto]="modalService.ocultarModal">
+
+    <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel1">Cargar imagen</h4>
+                    <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                  <h3>Seleccione una imagen</h3>
+          
+        
+                    <img src="">
+                    <input type="file" class="d-none" (change)="cambiarImagen($event.target.files[0])" #hiddenbutton>
+                    <a class="changeAvatar" (click)="hiddenbutton.click()">
+                        <img *ngIf="!imgTemp"[src]="modalService.img" alt="user">
+                        <img *ngIf="imgTemp"[src]="imgTemp" alt="user">
+                    </a>
+                    <!--Subir imagen con boton de guardar-->
+                     <!-- <button type="button" (click)="subirImagen()" [disabled]="!imagenSubir" class="btn btn-success waves-effect waves-light m-r-10">Guardar cambios</button>-->
+        
+                  
+                </div>
+                <div class="modal-footer">
+                    <button (click)="cerrarModal()" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button (click)="subirImagen()" type="button" class="btn btn-primary">Actualizar imagen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
