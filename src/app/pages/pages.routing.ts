@@ -5,6 +5,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicoComponent } from './mantenimientos/medico.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { PagesComponent } from './pages.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
       {path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Usuario de app'}},
       {path: 'hospitales', component: HospitalesComponent, data: {titulo: 'Hospitales de app'}},
       {path: 'medicos', component: MedicosComponent, data: {titulo: 'Medicos de app'}},
+      {path: 'medico/:id', component: MedicoComponent, data: {titulo: 'Medico de app'}},
     ]
   },
    
