@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class MedicosComponent implements OnInit {
 
-   public medicos:Medico[]=[];
+   public medicos: Medico[] = [];
    public cargando: boolean = true
 
 
@@ -24,9 +24,9 @@ export class MedicosComponent implements OnInit {
 cargarMedicos() {
   this.cargando = true
   this.medicoService.cargarMedicos().subscribe(medicos => {
-    this.cargando = false;
-    this.medicos = medicos
-  })
+  this.medicos = medicos;
+  console.log(medicos)
+})
 }
  
 
