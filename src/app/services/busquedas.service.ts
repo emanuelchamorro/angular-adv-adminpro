@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Hospital } from '../models/hospital.model';
+import { Medico } from '../models/medico.model';
 import { Usuario } from '../models/usuario.model';
 
 const base_url= environment.base_url;
@@ -38,7 +39,11 @@ private transformarEnHospitales(resultados:any[]):Hospital[] {
    //No hace falta instanciar el hospital porque la imagen ya la muestro con un pipe
     return resultados;
     }
-  
+
+private transformarEnMedicos(resultados:any[]):Medico[] {
+      //No hace falta instanciar el hospital porque la imagen ya la muestro con un pipe
+       return resultados;
+       }  
 
 buscar(tipo: 'usuarios'|'medicos'|'hospitales', termino:string ) {
 
@@ -52,7 +57,10 @@ buscar(tipo: 'usuarios'|'medicos'|'hospitales', termino:string ) {
               return this.transformarEnUsuarios(resp.resultados);
             
               case 'hospitales':
-              return this.transformarEnHospitales(resp.resultados)
+              return this.transformarEnHospitales(resp.resultados);
+
+              case 'medicos':
+                return this.transformarEnMedicos(resp.resultados)
 
               default:
                 return [];

@@ -1,14 +1,14 @@
-<div class="row">
+<div class="row" >
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <input type="text" class="form-control" placeholder="buscar medicos"
-                #txtTermino > 
+                #txtTermino (keyup)="buscar(txtTermino.value)"> 
             </div>    
         </div>
     </div>
 </div>
-<div class="row"  *ngIf="cargando">
+<div class="row"  *ngIf="!cargando">
     <div class="col-12">
     <div class="alert alert-info text-center">
         <h4 class="alert-heading">Cargando...</h4>
@@ -17,16 +17,18 @@
     </div>
     </div>
 </div>
-<div class="row"  *ngIf="!cargando" >
+<div class="row" *ngIf="cargando" >
 <div class="col-12">
     <div class="card">
         <div class="card-body">
 
             <div class="text-right">
-                <button  class="btn btn-primary">Crear medico</button>
+                <a class="btn btn-primary"
+                routerLink="/dashboard/medico/nuevo"
+                >Crear medico</a>
             </div>
 
-            <h4 class="card-title">Total de medicos: </h4>
+            <h4 class="card-title">Total de medicos: {{medicos.length}} </h4>
             <h6 class="card-subtitle">Medicos registrados en la app</h6>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -42,6 +44,7 @@
                             <td ><img [src]="medico.img |imagen: 'medicos'" 
                                 [alt]="medico.nombre" 
                                 class="avatar-list cursor-pointer"
+                                (click)="abrirModal(medico)"
                                ></td>
                             <td><input class="form-control" type="text"
                                  placeholder="nombre del medico"  
@@ -50,13 +53,15 @@
                             <td class="text-nowrap text-center">
                                 <a class="cursor-pointer mr-2"
                                    data-toggle="tooltip" 
-                                   data-original-title="Guardar cambios"
+                                   data-original-title="Editar"
+                                   [routerLink]="['/dashboard/medico', medico._id ]"
                                    > 
-                                   <i class="fa fa-floppy-o text-secondary"></i>
+                                   <i class="fa fa-pencil text-secondary"></i>
                                  </a>
                                 <a class="cursor-pointer ml-2"  
                                    data-toggle="tooltip" 
                                    data-original-title="Borrar"
+                                   (click)="borrarMedico(medico)"
                                   > 
                                    <i class="fa fa-close text-danger"></i> 
                                 </a>
