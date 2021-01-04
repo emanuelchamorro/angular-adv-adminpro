@@ -5,10 +5,11 @@
                 <h4 class="card-title">Medico</h4>
                 <h6 class="card-subtitle">Actualizar información</h6>
                 <form class="form p-t-20" [formGroup]="medicoForm" (submit)="guardarMedico()">
-                    <div class="form-group">
+                    <div class="form-group"
+                          *ngIf="medicoSeleccionado">
                         <label for="exampleInputuname">Avatar</label>
                         <div class="input-group">
-                          <img> 
+                          <img [src]="medicoSeleccionado.img | imagen: 'medicos'"> 
                         </div>
                     </div>
                     <div class="form-group">

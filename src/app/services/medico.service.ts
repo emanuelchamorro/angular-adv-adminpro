@@ -40,7 +40,7 @@ get headers() {
 
 
    
-   crearMedicos(medico:Medico) {
+   crearMedicos(medico:{nombre:string, hospital:string}) {
   
     const url= `${base_url}/medicos`;
   
