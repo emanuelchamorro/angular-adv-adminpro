@@ -1,1 +1,51 @@
-<p>medico works!</p>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Medico</h4>
+                <h6 class="card-subtitle">Actualizar información</h6>
+                <form class="form p-t-20" [formGroup]="medicoForm" (submit)="guardarMedico()">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Avatar</label>
+                        <div class="input-group">
+                          <img> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" 
+                                   formControlName="nombre"
+                                   class="form-control"
+                                   id="exampleInputuname" 
+                                   placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Hospital</label>
+                        <div class="input-group">
+                            <select class="form-control" formControlName="hospital">
+                                <option value="">Seleccione un hospital</option>
+                                <option *ngFor="let hospital of hospitales"
+                                        [value]="hospital._id">{{hospital.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <button [disabled]="medicoForm.invalid" type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar cambios</button>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6" *ngIf="hospitalSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hospital</h4>
+                <h6 class="card-subtitle">{{hospitalSeleccionado.nombre}}</h6>
+                <img class="img-thumbnail"[src]="hospitalSeleccionado.img | imagen: 'hospitales'">
+            </div>
+        </div>
+    </div>
+</div>
