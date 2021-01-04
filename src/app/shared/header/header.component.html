@@ -42,9 +42,13 @@
                 <!-- ============================================================== -->
                 <!-- Search -->
                 <!-- ============================================================== -->
-                <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                <li class="nav-item search-box"> <a (click)="toggle = !toggle" class="nav-link waves-effect waves-dark" ><i class="ti-search"></i></a>
+                    <form class="app-search" (submit)="busqueda(txtBusqueda.value)"  [class.d-flex]="toggle">
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Buscar..."
+                                #txtBusqueda> 
+                                <a class="srh-btn"><i (click)="toggle = !toggle" class="ti-close"></i></a> </form>
                 </li>
                 <!-- ============================================================== -->
                 <!-- Comment -->

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -9,15 +10,25 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class HeaderComponent{
 
-  public usuario: Usuario
 
-  constructor(private userService: UsuarioService) {
+  public usuario: Usuario
+  public toggle: boolean = false
+
+  constructor(private userService: UsuarioService, private router:Router) {
     this.usuario = userService.usuario;
    
    }
-
-
   logOut(){
     this.userService.logout();
+  }
+
+
+  busqueda(termino:string){
+    
+    if(termino.length === 0){
+      this.router.navigateByUrl('/dashboard')
+    };
+
+    this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
   }
 }
