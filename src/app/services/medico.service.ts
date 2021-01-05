@@ -64,6 +64,17 @@ get headers() {
    }
 
 
+   getMedicoById(id:string) {
+
+    const url= `${base_url}/medicos/${id}`;
+
+    return this.http.get(url, this.headers)
+    .pipe(
+      map((resp:{ok:boolean, medico:Medico}) => resp.medico)
+    );
+    
+   }
+
 
 }
 
