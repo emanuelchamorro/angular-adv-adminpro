@@ -13,7 +13,7 @@ export class Usuario {
      public email: string,
      public img: string,
      public password?: string,
-     public role?: string,
+     public role?: 'ADMIN_ROLE' | 'USER_ROLE',
      public _id?: string,
     )
     {}

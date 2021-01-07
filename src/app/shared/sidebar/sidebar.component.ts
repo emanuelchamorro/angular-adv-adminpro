@@ -16,8 +16,8 @@ export class SidebarComponent implements OnInit {
   public toggle:boolean=false
   public toggle2:boolean=false
 
-  constructor(private sbService: SidebarService, private userService: UsuarioService) {
-    this.menuItems = sbService.menu;
+  constructor(public sidebarService: SidebarService, private userService: UsuarioService) {
+    //this.menuItems = sbService.menu;
     this.usuario = userService.usuario;
     
    }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
 import { Hospital } from 'src/app/models/hospital.model';
 import { Medico } from 'src/app/models/medico.model';
 import { HospitalService } from 'src/app/services/hospital.service';
@@ -101,7 +102,11 @@ if( this.medicoSeleccionado) {
     }
 
 
-    this.medicoService.getMedicoById(id).subscribe(medico => {
+    this.medicoService.getMedicoById(id)
+    .pipe(
+      delay(100)
+      )
+    .subscribe(medico => {
       
       if (!medico) {
         return this.router.navigateByUrl(`/dashboard/medicos`);

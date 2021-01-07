@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
@@ -32,7 +33,7 @@ const routes: Routes = [
    
       //Mantenimientos
       
-      {path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Usuario de app'}},
+      {path: 'usuarios', canActivate: [AdminGuard], component: UsuariosComponent, data: {titulo: 'Usuario de app'}},
       {path: 'hospitales', component: HospitalesComponent, data: {titulo: 'Hospitales de app'}},
       {path: 'medicos', component: MedicosComponent, data: {titulo: 'Medicos de app'}},
       {path: 'medico/:id', component: MedicoComponent, data: {titulo: 'Medico de app'}},

@@ -20,7 +20,7 @@
                         </li>
                         <li class="nav-devider"></li>
                         <li class="nav-small-cap">PERSONAL</li>
-                        <li *ngFor="let item of menuItems"> <a  (click)="toggle2 = !toggle2" class="has-arrow waves-effect waves-dark">
+                        <li *ngFor="let item of sidebarService.menu"> <a  (click)="toggle2 = !toggle2" class="has-arrow waves-effect waves-dark">
                             <i [class]="item.icon"></i><span class="hide-menu">{{item.titulo}} 
                                 <span class="label label-rouded label-themecolor pull-right">4</span></span>
                             </a>
